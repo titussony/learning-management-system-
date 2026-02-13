@@ -1,0 +1,84 @@
+{% extends 'base.html' %} 
+ 
+{% block title %}Student Dashboard - LMS{% endblock %} 
+ 
+{% block content %} 
+<div class="row"> 
+    <div class="col-12"> 
+        <div class="card mb-4"> 
+            <div class="card-body"> 
+                <h2 class="card-title">Student Dashboard</h2> 
+                <p class="text-muted">Welcome back, {{ user.username }}!</p> 
+                <div class="row"> 
+                    <div class="col-md-4"> 
+                        <div class="card bg-primary text-white"> 
+                            <div class="card-body text-center"> 
+                                <h3>{{ notes.count }}</h3> 
+                                <p>Available Notes</p> 
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="col-md-4"> 
+                        <div class="card bg-success text-white"> 
+                            <div class="card-body text-center"> 
+                                <h3>Student</h3> 
+                                <p>Your Role</p> 
+                            </div> 
+                        </div> 
+                    </div> 
+                    <div class="col-md-4"> 
+                        <div class="card bg-info text-white"> 
+                            <div class="card-body text-center"> 
+                                <h3>Active</h3> 
+                                <p>Status</p> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+ 
+<div class="row"> 
+    <div class="col-12"> 
+        <div class="card"> 
+            <div class="card-body"> 
+                <h3 class="card-title mb-3">Available Study Notes</h3> 
+                 
+                {% if notes %} 
+                    <div class="table-responsive"> 
+                        <table class="table table-striped"> 
+                            <thead> 
+                                <tr> 
+                                    <th>Title</th> 
+                                    <th>Uploaded By</th> 
+                                    <th>Uploaded At</th> 
+                                    <th>Actions</th> 
+                                </tr> 
+                            </thead> 
+                            <tbody> 
+                                {% for note in notes %} 
+                                    <tr> 
+                                        <td>{{ note.title }}</td> 
+                                        <td>{{ note.uploader.username }}</td> 
+                                        <td>{{ note.created_at|date:"M d, Y H:i" }}</td> 
+                                        <td> 
+                                            <a href="{% url 'courses:download' note.id %}" class="btn btn-sm btn-primary">Download</a> 
+                                        </td> 
+                                    </tr> 
+                                {% endfor %} 
+                            </tbody> 
+                        </table> 
+                    </div> 
+                {% else %} 
+                    <div class="text-center py-4"> 
+                        <p class="text-muted">No notes are available at the moment.</p> 
+                        <p class="text-muted">Please check back later for new study materials.</p> 
+                    </div> 
+                {% endif %} 
+            </div> 
+        </div> 
+    </div> 
+</div> 
+{% endblock %} 
